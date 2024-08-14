@@ -43,7 +43,7 @@ public class QuestionsController {
 
     @Operation(summary = "Review if responses allow for prescription", responses = {
             @ApiResponse(responseCode = "202", description = "We are able to prescribe to you today"),
-            @ApiResponse(responseCode = "406", description = "List of rejection reasons"),
+            @ApiResponse(responseCode = "200", description = "List of rejection reasons"),
             @ApiResponse(responseCode = "500", description = "Unable to validate responses")})
     @PostMapping(path = "/responses", produces = "application/json")
     public ResponseEntity validateResponses(@RequestBody List<QuestionResponse> responses) {
@@ -55,7 +55,7 @@ public class QuestionsController {
             if (valid) {
                 return new ResponseEntity<String>("We are able to prescribe to you today", HttpStatus.ACCEPTED);
             }
-            return new ResponseEntity<>(rejectionStrings, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(rejectionStrings, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Could not validate responses: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
