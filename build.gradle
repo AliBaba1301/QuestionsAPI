@@ -22,6 +22,9 @@ dependencies {
     // DB
     implementation "com.h2database:h2:2.1.214"
 
+    // OAS3 Integration
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0"
+
     //Tests
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
