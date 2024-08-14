@@ -1,5 +1,10 @@
 package org.task.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Questions API")
 public class QuestionsController {
     private final QuestionsService questionsService;
 
@@ -20,6 +26,10 @@ public class QuestionsController {
         this.questionsService = questionsService;
     }
 
+
+    @Operation(summary = "Get list of questions based on given disease", responses = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Question.class))),
+            @ApiResponse(responseCode = "500", description = "Unable to get questions list")})
     @GetMapping(path = "/questions", produces = "application/json")
     public ResponseEntity getAllQuestions(@RequestParam(name = "disease") String disease) {
         try {
@@ -31,6 +41,10 @@ public class QuestionsController {
     }
 
 
+    @Operation(summary = "Review if responses allow for prescription", responses = {
+            @ApiResponse(responseCode = "202", description = "We are able to prescribe to you today"),
+            @ApiResponse(responseCode = "406", description = "List of rejection reasons"),
+            @ApiResponse(responseCode = "500", description = "Unable to validate responses")})
     @PostMapping(path = "/responses", produces = "application/json")
     public ResponseEntity validateResponses(@RequestBody List<QuestionResponse> responses) {
 
@@ -46,11 +60,13 @@ public class QuestionsController {
             return new ResponseEntity<>("Could not validate responses: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
 
+    @Operation(summary = "Add new questions for a given disease", responses = {
+            @ApiResponse(responseCode = "201", description = "Created and returned new list of questions",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Question.class))),
+            @ApiResponse(responseCode = "500", description = "Unable to create new questions")})
     @PostMapping(path = "/questions", produces = "application/json")
     public ResponseEntity addQuestions(@RequestParam(name = "disease") String disease,
                                        @RequestBody List<Question> newQuestions) {
@@ -63,6 +79,11 @@ public class QuestionsController {
         }
     }
 
+
+    @Operation(summary = "Update questions for a given disease", responses = {
+            @ApiResponse(responseCode = "200", description = "Updated and returned updated list of questions",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Question.class))),
+            @ApiResponse(responseCode = "500", description = "Unable to update provided questions")})
     @PutMapping(path = "/questions", produces = "application/json")
     public ResponseEntity updateQuestions(@RequestParam(name = "disease") String disease,
                                           @RequestBody List<Question> newQuestions) {
@@ -75,6 +96,10 @@ public class QuestionsController {
         }
     }
 
+
+    @Operation(summary = "Delete provided questions", responses = {
+            @ApiResponse(responseCode = "200", description = "Deleted provided list of questions"),
+            @ApiResponse(responseCode = "500", description = "Unable to delete provided questions")})
     @DeleteMapping(path = "/questions")
     public ResponseEntity deleteQuestions(@RequestBody List<Question> deleteQuestions) {
         try {
