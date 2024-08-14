@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.task.Model.Question;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Repository("questionsRepository")
 public class QuestionsRepository {
@@ -42,5 +41,19 @@ public class QuestionsRepository {
                         rs.getBoolean("Expected_Answer"),
                         rs.getString("Rejection_String")));
 
+    }
+
+    public Map<Integer, Map.Entry<Boolean,String>>  getExpectedResponses() {
+        String getAllQuestionsSql = "Select ID, Expected_Answer, Rejection_String" +
+                " From Questions";
+
+        Map<Integer, Map.Entry<Boolean,String>> expectedAnswers = new HashMap<>();
+        jdbcTemplate.query(getAllQuestionsSql, new HashMap<>(), (rs,rowNum) ->
+                expectedAnswers.put(rs.getInt("ID"), new
+                        AbstractMap.SimpleEntry<Boolean,String>(
+                                rs.getBoolean("Expected_Answer"),
+                        rs.getString("Rejection_String"))));
+
+        return expectedAnswers;
     }
 }
