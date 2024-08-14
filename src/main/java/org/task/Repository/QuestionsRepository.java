@@ -12,6 +12,10 @@ import java.util.*;
 public class QuestionsRepository {
     NamedParameterJdbcTemplate jdbcTemplate;
 
+    public QuestionsRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public QuestionsRepository() {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setUrl("jdbc:h2:mem:myDb");
