@@ -18,6 +18,9 @@ dependencies {
     implementation 'org.springframework:spring-core:' + springVersion
     implementation "org.springframework.boot:spring-boot-starter-web:3.3.2"
 
+    // DB
+    implementation "com.h2database:h2:2.1.214"
+
     //Tests
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
