@@ -11,6 +11,7 @@ This Application uses Java 17 with Spring Boot
 - NOTE: This API utilises an In Memory DB that closes when the application stops running.
 
 In order to access the DB start the application and go to: http://localhost:8080/h2-console/
+- JDBC URL: `jdbc:h2:mem:myDb`
 - Username: `sa`
 - Password: `password`
 
