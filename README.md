@@ -8,7 +8,7 @@ This Application uses Java 17 with Spring Boot
 4. Create a new Spring Boot Configuration with the below Specifications
    ![f08e7f5067044784f42d0c7c8e4ea4093cd7c19832342ef52a1c115c658e2c56](https://github.com/user-attachments/assets/50659a02-4083-47c0-a75a-ff14271bdb7c)
 5. Press the play button in the top corner
-   NOTE: This API utilises an In Memory DB that closes when the application stops running.
+- NOTE: This API utilises an In Memory DB that closes when the application stops running.
 
 In order to access the DB start the application and go to: http://localhost:8080/h2-console/
 - Username: `sa`
