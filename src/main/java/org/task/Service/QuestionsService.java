@@ -39,4 +39,8 @@ public class QuestionsService {
 
         return map;
     }
+
+    public List<Question> addQuestions (String disease, List<Question> questions){
+        return questionsRepository.addQuestions(disease,questions);
+    }
 }

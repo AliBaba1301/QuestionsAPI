@@ -30,6 +30,7 @@ public class QuestionsController {
         }
     }
 
+
     @PostMapping(path = "/responses", produces = "application/json")
     public ResponseEntity validateResponses(@RequestBody List<QuestionResponse> responses) {
 
@@ -43,6 +44,21 @@ public class QuestionsController {
             return new ResponseEntity<>(rejectionStrings, HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception e) {
             return new ResponseEntity<>("Could not validate responses: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+
+    @PostMapping(path = "/questions", produces = "application/json")
+    public ResponseEntity addQuestions(@RequestParam(name = "disease") String disease,
+                                       @RequestBody List<Question> newQuestions) {
+        try {
+            List<Question> updatedQuestionsList = questionsService.addQuestions(disease, newQuestions);
+            return new ResponseEntity<>(updatedQuestionsList, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Could not add new questions: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

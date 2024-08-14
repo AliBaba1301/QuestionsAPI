@@ -56,4 +56,23 @@ public class QuestionsRepository {
 
         return expectedAnswers;
     }
+
+    public List<Question>  addQuestions(String disease, List<Question> questions) {
+        String uploadQuestionsSql = "INSERT INTO QUESTIONS (Disease, Question, " +
+                "Expected_Answer, Rejection_String) " +
+                "VALUES (:disease, :question,:expectedAnswer,:rejectionString)";
+
+        for (Question question : questions) {
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("disease", disease)
+                    .addValue("question", question.getQuestion())
+                    .addValue("expectedAnswer", question.isExpectedAnswer())
+                    .addValue("rejectionString", question.getRejectionString());
+
+            jdbcTemplate.update(uploadQuestionsSql, params);
+        }
+
+        return getAllQuestions(disease);
+
+    }
 }
