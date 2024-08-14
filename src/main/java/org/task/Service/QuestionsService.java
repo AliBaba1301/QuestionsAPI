@@ -43,4 +43,8 @@ public class QuestionsService {
     public List<Question> addQuestions (String disease, List<Question> questions){
         return questionsRepository.addQuestions(disease,questions);
     }
+
+    public List<Question> updateQuestions (String disease, List<Question> questions){
+        return questionsRepository.updateQuestions(disease,questions);
+    }
 }

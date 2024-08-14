@@ -75,4 +75,24 @@ public class QuestionsRepository {
         return getAllQuestions(disease);
 
     }
+
+    public List<Question>  updateQuestions(String disease, List<Question> questions) {
+        String uploadQuestionsSql = "UPDATE QUESTIONS " +
+                "SET Disease = :disease , Question = :question, " +
+                "Expected_Answer = :expectedAnswer, Rejection_String = :rejectionString " +
+                "WHERE Id = :questionId";
+
+        for (Question question : questions) {
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("disease", disease)
+                    .addValue("question", question.getQuestion())
+                    .addValue("expectedAnswer", question.isExpectedAnswer())
+                    .addValue("rejectionString", question.getRejectionString())
+                    .addValue("questionId", question.getQuestionId());
+
+            jdbcTemplate.update(uploadQuestionsSql, params);
+        }
+
+        return getAllQuestions(disease);
+    }
 }

@@ -62,4 +62,17 @@ public class QuestionsController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping(path = "/questions", produces = "application/json")
+    public ResponseEntity updateQuestions(@RequestParam(name = "disease") String disease,
+                                          @RequestBody List<Question> newQuestions) {
+        try {
+            List<Question> updatedQuestionsList = questionsService.updateQuestions(disease, newQuestions);
+            return new ResponseEntity<>(updatedQuestionsList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Could not update questions: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
