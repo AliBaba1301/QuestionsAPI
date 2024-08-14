@@ -75,4 +75,15 @@ public class QuestionsController {
         }
     }
 
+    @DeleteMapping(path = "/questions")
+    public ResponseEntity deleteQuestions(@RequestBody List<Question> deleteQuestions) {
+        try {
+            questionsService.deleteQuestions(deleteQuestions);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Could not delete questions: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -95,4 +95,15 @@ public class QuestionsRepository {
 
         return getAllQuestions(disease);
     }
+
+    public void deleteQuestions(List<Question> questions) {
+        String deleteQuestionsSql = "DELETE FROM QUESTIONS WHERE Id = :questionsId";
+
+        for (Question question : questions) {
+            MapSqlParameterSource params = new MapSqlParameterSource(
+                    "questionsId", question.getQuestionId());
+
+            jdbcTemplate.update(deleteQuestionsSql, params);
+        }
+    }
 }
